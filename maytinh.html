@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>Calculator</title>
+</head>
+<body>
+    <table width="360" align="center" cellpadding="5" border="1"> 
+        <tr height="100" bgcolor="gray">
+            <td colspan="4" valign="bottom" align="right">
+                <font id="screen" color="white">0</font>
+            </td>
+        </tr>
+        <tr height="60" bgcolor="lightgray" align="center">
+            <td colspan="2" onclick="clearAll()">AC</td>
+            <td width="25%" onclick="deleteLast()">DEL</td>
+            <td width="25%" onclick="appendChar('/')">/</td>
+        </tr>
+        <tr height="60" bgcolor="lightgray" align="center">
+            <td onclick="appendChar('1')">1</td>
+            <td onclick="appendChar('2')">2</td>
+            <td onclick="appendChar('3')">3</td>
+            <td onclick="appendChar('*')">*</td>
+        </tr>   
+        <tr height="60" bgcolor="lightgray" align="center">
+            <td onclick="appendChar('4')">4</td>
+            <td onclick="appendChar('5')">5</td>
+            <td onclick="appendChar('6')">6</td>
+            <td onclick="appendChar('+')">+</td>
+        </tr>
+        <tr height="60" bgcolor="lightgray" align="center">
+            <td onclick="appendChar('7')">7</td>
+            <td onclick="appendChar('8')">8</td>
+            <td onclick="appendChar('9')">9</td>
+            <td onclick="appendChar('-')">-</td>
+        </tr>
+        <tr height="60" bgcolor="lightgray" align="center">
+            <td onclick="appendChar('.')">.</td>
+            <td onclick="appendChar('0')">0</td>
+            <td colspan="2" onclick="calculate()">=</td>
+        </tr>
+    </table>
+
+    <script>
+        const screen = document.getElementById("screen");
+        let current = "";
+
+        function appendChar(char) {
+            current += char;
+            if (screen) screen.textContent = current;
+        }
+
+        function clearAll() {
+            current = "";
+            if (screen) screen.textContent = "0";
+        }
+
+        function deleteLast() {
+            current = current.slice(0, -1);
+            if (screen) screen.textContent = current || "0";
+        }
+
+        function calculate() {
+            if (!current) return;
+            try {
+                const result = eval(current);
+                if (!isFinite(result)) {
+                    if (screen) screen.textContent = "Lỗi";
+                    current = "";
+                } else {
+                    current = String(result);
+                    if (screen) screen.textContent = current;
+                }
+            } catch {
+                if (screen) screen.textContent = "Lỗi";
+                current = "";
+            }
+        }
+    </script>
+</body>
+</html>
